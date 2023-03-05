@@ -2,7 +2,15 @@ package views;
 
 import java.util.Scanner;
 
+import controllers.LToy;
+import models.Toy1;
+
 public class ViewMenu {
+    private LToy lToy;
+
+    public ViewMenu(LToy lToy) {
+    }
+
     /**
      * Запуск меню с выбором действий
      */
@@ -26,6 +34,7 @@ public class ViewMenu {
             try {
                 switch (com) {
                     case CREATE:
+
                     case EDIT:
                     case GET:
                     case PRESENT:                    
@@ -46,6 +55,16 @@ public class ViewMenu {
         Scanner in = new Scanner(System.in);
         System.out.print(message);
         return in.nextLine();
+    }
+
+    public Toy1 getNoteFromConsole() {
+        Toy1 toy = new Toy1();
+        /** Устанавливаем значения ID, наименования, количества и частоты выпадения */
+        toy.setIdToy(lToy.getIdToy() + 1);
+        toy.setNameToy(prompt("Наименование: "));
+        toy.setCountToy(Integer.parseInt(prompt("Количество: ")));
+        toy.setFrqDlvrToy(Integer.parseInt(prompt("Частота выпадения от 0 до 100: ")));
+        return toy;
     }
 
 }
