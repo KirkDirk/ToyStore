@@ -8,5 +8,7 @@ public interface IToysManagable {
      * Метод добавления Игрушки в базу розыгрыша
      * @param toy - класс Игрушки
      */
-    void createToy(Toy1 toy);
+    void createToy();
+
+    int getLastIDToy();
 }

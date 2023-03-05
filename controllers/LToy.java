@@ -11,12 +11,14 @@ public class LToy {
     }
 
     public Toy1 getNewToy() {
-        //viewMenu
+        Toy1 toy = new Toy1();
+        toy.setIdToy(getLastIdToy());
+        
+        iToysManagable.createToy();
         return null;        
     };
 
-    public int getIdToy() {
-        
-        return 0;        
+    public int getLastIdToy() {
+        return iToysManagable.getLastIDToy();        
     }
 }

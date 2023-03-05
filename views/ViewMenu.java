@@ -34,7 +34,10 @@ public class ViewMenu {
             try {
                 switch (com) {
                     case CREATE:
-
+                        Toy1 toy = this.getToyFromConsole();
+                        lToy.getNewToy();
+                        System.out.println("Новые игрушки добавлены в базу: ");
+                        System.out.println(toy.toString() + "\n");
                     case EDIT:
                     case GET:
                     case PRESENT:                    
@@ -57,13 +60,17 @@ public class ViewMenu {
         return in.nextLine();
     }
 
-    public Toy1 getNoteFromConsole() {
+    /**
+     * Метод получения из консоли данных по добавляемым Игрушкам 
+     * @return
+     */
+    public Toy1 getToyFromConsole() {
         Toy1 toy = new Toy1();
         /** Устанавливаем значения ID, наименования, количества и частоты выпадения */
-        toy.setIdToy(lToy.getIdToy() + 1);
-        toy.setNameToy(prompt("Наименование: "));
-        toy.setCountToy(Integer.parseInt(prompt("Количество: ")));
-        toy.setFrqDlvrToy(Integer.parseInt(prompt("Частота выпадения от 0 до 100: ")));
+        toy.setIdToy(lToy.getLastIdToy() + 1);
+        toy.setNameToy(prompt("Введите наименование Игрушки: "));
+        toy.setCountToy(Integer.parseInt(prompt("Введител количество Игрушек: ")));
+        toy.setFrqDlvrToy(Integer.parseInt(prompt("Введите частоту выпадения Игрушек от 0 до 100: ")));
         return toy;
     }
 
