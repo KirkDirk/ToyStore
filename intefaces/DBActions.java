@@ -1,19 +1,22 @@
 package intefaces;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 import models.Toy1;
 
 public class DBActions implements IDBActions {
     /** Путь к файлу, с котороым проводятся текущие действия */
     private String fileName;
+    
     
     public DBActions(String fileName) {
         this.fileName = fileName;
@@ -32,7 +35,6 @@ public class DBActions implements IDBActions {
         if (lastLine != null) {
             String[] numbers = lastLine.split(";");            
             numberOfNotes = Integer.parseInt(numbers[0]);
-            //System.out.println(String.format("Получили ласт %s", numberOfNotes));
             }
         return numberOfNotes;
     }
@@ -42,7 +44,6 @@ public class DBActions implements IDBActions {
         String toyString = convertToyToString(toy);
         FileWriter wrtr = new FileWriter(this.fileName, true);
         BufferedWriter buffWrtr = new BufferedWriter(wrtr);
-        //System.out.println(this.fileName);
         buffWrtr.write(toyString);
         buffWrtr.flush();
         buffWrtr.close();        
@@ -82,5 +83,59 @@ public class DBActions implements IDBActions {
         }
         return result;
     }
-    
+
+    @Override
+    public List<Toy1> getAllToys() throws FileNotFoundException, IOException {
+        List<Toy1> allToys = new ArrayList<>();
+        List<String> getAllLines = new ArrayList<>();
+        getAllLines = Files.readAllLines(Paths.get(this.fileName));
+        for (String line : getAllLines) {
+            if (line != null) {   
+                allToys.add(lineToToy1(line));            
+            }   
+        }
+        return allToys;        
+    }
+
+    /**
+     * Преобразовываем считанную из базы розыгрыша строку в класс Игрушки
+     * @param line
+     * @return
+     */
+    private Toy1 lineToToy1(String line) {
+        String[] lines = line.split(";");
+        return new Toy1(Integer.parseInt(lines[0]), 
+                        lines[1], 
+                        Integer.parseInt(lines[2]),
+                        Integer.parseInt(lines[3]));
+    }
+
+    /**
+     * Преобразовываем экземпляр класса Игрушки в строку для записи в базу
+     * @param toy
+     * @return
+     */
+    private String toyToString(Toy1 toy){
+        String line = toy.getIdToy() + ";" +
+                        toy.getNameToy() + ";" +
+                        toy.getCountToy() + ";" +
+                        toy.getFrqDlvrToy();
+        return line;
+    }
+
+    @Override
+    public void saveAllToys(List<Toy1> allToys) throws FileNotFoundException, IOException{
+        FileWriter wrtr = new FileWriter(this.fileName, false);
+        BufferedWriter buffWrtr = new BufferedWriter(wrtr);
+        String allLines = "";
+        for (Toy1 toy1 : allToys) {
+            allLines = allLines + toyToString(toy1) + "\n";
+        }
+        buffWrtr.write(allLines);
+        buffWrtr.flush();
+        buffWrtr.close();        
+
+    }
+
+       
 }

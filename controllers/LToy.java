@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 
 import intefaces.IToysManagable;
 import models.Toy1;
@@ -24,6 +25,28 @@ public class LToy {
      */
     public int getLastIdToy() throws IOException {
         return iToysManagable.getLastIDToy();        
+    }
+
+    /**
+     * Получаем список всех Игрушек
+     * @return List-Toy1
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public List<Toy1> getAllToys() throws FileNotFoundException, IOException {
+        return iToysManagable.getAllToys();
+    }
+
+    /**
+     * Заменяем значение частоты выпадения для выбранной Игрушки
+     * @param numberForEdit
+     * @param frqDlvrEdit
+     * @return Toy1
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public Toy1 changingFrq(int numberForEdit, int frqDlvrEdit) throws FileNotFoundException, IOException {
+        return iToysManagable.changingFrq(numberForEdit, frqDlvrEdit);
     }
 
 }

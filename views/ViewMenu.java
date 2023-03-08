@@ -1,6 +1,7 @@
 package views;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 
 import controllers.LToy;
@@ -44,7 +45,19 @@ public class ViewMenu {
                         lToy.getNewToy(toy);
                         System.out.println("---\nНовые игрушки добавлены в базу: ");
                         System.out.println(toy.toString() + "\n");
+                        break;
                     case EDIT:
+                        List<Toy1> allToys = lToy.getAllToys();
+                        System.out.println("---\nСписок всех игрушек-частоты в базе: ");
+                        for (Toy1 toy1 : allToys) {
+                            System.out.println(String.format("%d. %s - %d", toy1.getIdToy(), toy1.getNameToy(), toy1.getFrqDlvrToy()));
+                        }
+                        int numberForEdit = Integer.parseInt(prompt("\nВведите номер редактируемой Игрушки: "));
+                        int frqDlvrEdit = Integer.parseInt(prompt("Введите новое значение частоты: "));
+                        Toy1 toyEdit = lToy.changingFrq(numberForEdit, frqDlvrEdit);
+                        System.out.println("Значение частоты изменено: ");
+                        System.out.println(toyEdit.toString() + "\n");
+                        break;                        
                     case GET:
                     case PRESENT:                    
                 }
@@ -57,7 +70,7 @@ public class ViewMenu {
     /**
      * Получение данных с одного ввода с консоли
      * 
-     * @param message - выводимое сообщение
+     * @param message выводимое сообщение
      * @return String
      */
     private String prompt(String message) {
@@ -68,7 +81,7 @@ public class ViewMenu {
 
     /**
      * Метод получения из консоли данных по добавляемым Игрушкам 
-     * @return
+     * @return toy
      * @throws IOException
      */
     public Toy1 getToyFromConsole() throws IOException {

@@ -2,6 +2,7 @@ package intefaces;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 
 import models.Toy1;
 
@@ -22,4 +23,21 @@ public interface IDBActions {
      * @throws FileNotFoundException
      */
     void saveNewToyToStorage(Toy1 toy) throws FileNotFoundException, IOException;
+
+    /**
+     * Получаем список всех Игрушек в базе розыгрыша
+     * @return
+     * @throws IOException
+     * @throws FileNotFoundException
+     */
+    List<Toy1> getAllToys() throws FileNotFoundException, IOException;
+
+    /**
+     * Перезаписываем списко всех Игрушек в базу розыгрыша
+     * @param allToys список всех Игрушек
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    void saveAllToys(List<Toy1> allToys) throws FileNotFoundException, IOException;
+
 }
