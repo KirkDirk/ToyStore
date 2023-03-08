@@ -1,5 +1,8 @@
 package controllers;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import intefaces.IToysManagable;
 import models.Toy1;
 
@@ -10,15 +13,17 @@ public class LToy {
         this.iToysManagable = iToysManagable;
     }
 
-    public Toy1 getNewToy() {
-        Toy1 toy = new Toy1();
-        toy.setIdToy(getLastIdToy());
-        
-        iToysManagable.createToy();
-        return null;        
+    public void getNewToy(Toy1 toy) throws FileNotFoundException, IOException {
+        iToysManagable.createToy(toy);                
     };
 
-    public int getLastIdToy() {
+    /**
+     * Получаем ID последней Игрушки в базе розыгрыша
+     * @return int
+     * @throws IOException
+     */
+    public int getLastIdToy() throws IOException {
         return iToysManagable.getLastIDToy();        
     }
+
 }

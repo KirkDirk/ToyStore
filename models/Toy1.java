@@ -13,7 +13,7 @@ public class Toy1 extends CToy {
 
     @Override
     public String toString() {
-        return String.format("Идентификатор: %s\nНазвание: %s\nКоличество: %s\nЧастота выпадения: %s", idToy, nameToy, countToy, frqDlvrToy);
+        return String.format("  Идентификатор: %s\n  Название: %s\n  Количество: %s\n  Частота выпадения: %s", idToy, nameToy, countToy, frqDlvrToy);
     }
     
 

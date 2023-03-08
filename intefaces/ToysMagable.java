@@ -1,5 +1,8 @@
 package intefaces;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import models.Toy1;
 /** Класс для управления Игрушками в базе розыгрыша */
 public class ToysMagable implements IToysManagable {
@@ -11,14 +14,13 @@ public class ToysMagable implements IToysManagable {
     }
 
     @Override
-    public void createToy() {
-        
-        idbActions.getLastIDToy();
-        throw new UnsupportedOperationException("Unimplemented method 'createToy'");
+    public void createToy(Toy1 toy) throws FileNotFoundException, IOException {
+        idbActions.saveNewToyToStorage(toy);
+        //throw new UnsupportedOperationException("Unimplemented method 'createToy'");
     }
 
     @Override
-    public int getLastIDToy() {
+    public int getLastIDToy() throws IOException {
         return idbActions.getLastIDToy();
     }
     
