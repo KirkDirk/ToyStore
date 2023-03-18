@@ -49,4 +49,25 @@ public class LToy {
         return iToysManagable.changingFrq(numberForEdit, frqDlvrEdit);
     }
 
+    /**
+     * Разыгрываем призовую игрушку
+     * @return Toy1
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public Toy1 getPrizeToy() throws FileNotFoundException, IOException {
+        return iToysManagable.getPrizeToy();
+    }
+
+    /**
+     * Записываем результаты розыгрыша игрушки
+     * @param prizeToy экземпляр класса Toy1, определенныq в getPrizeToy
+     * @param nameWinner имя победителя
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public void saveResultRaffle(Toy1 prizeToy, String nameWinner) throws FileNotFoundException, IOException {
+        iToysManagable.saveResultRaffle(prizeToy, nameWinner);
+    }
+
 }

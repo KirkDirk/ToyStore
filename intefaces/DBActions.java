@@ -14,10 +14,13 @@ import java.util.List;
 import models.Toy1;
 
 public class DBActions implements IDBActions {
-    /** Путь к файлу, с котороым проводятся текущие действия */
+    /** Путь к файлу, с которым проводятся текущие действия */
     private String fileName;
-    
-    
+    /** Путь к файлу, в который записываются победители */
+    private String fileWinner = "src\\storage\\dbWinner.txt";
+    /** Путь к файлу, в котором список невыданных призовых игрушек */
+    private String fileDstrb = "src\\storage\\listToyDistribution";
+       
     public DBActions(String fileName) {
         this.fileName = fileName;
         try (FileWriter writer = new FileWriter(fileName, true)) {
@@ -42,11 +45,7 @@ public class DBActions implements IDBActions {
     @Override
     public void saveNewToyToStorage(Toy1 toy) throws FileNotFoundException, IOException {
         String toyString = convertToyToString(toy);
-        FileWriter wrtr = new FileWriter(this.fileName, true);
-        BufferedWriter buffWrtr = new BufferedWriter(wrtr);
-        buffWrtr.write(toyString);
-        buffWrtr.flush();
-        buffWrtr.close();        
+        saveStringToFile(toyString, this.fileName, true);               
     }
 
     /**
@@ -65,7 +64,7 @@ public class DBActions implements IDBActions {
     /**
      * Метод получения последней строки из базы розыгрыша
      * @param file
-     * @return
+     * @return String
      * @throws FileNotFoundException
      * @throws IOException
      */
@@ -100,7 +99,7 @@ public class DBActions implements IDBActions {
     /**
      * Преобразовываем считанную из базы розыгрыша строку в класс Игрушки
      * @param line
-     * @return
+     * @return Toy1
      */
     private Toy1 lineToToy1(String line) {
         String[] lines = line.split(";");
@@ -113,7 +112,7 @@ public class DBActions implements IDBActions {
     /**
      * Преобразовываем экземпляр класса Игрушки в строку для записи в базу
      * @param toy
-     * @return
+     * @return String
      */
     private String toyToString(Toy1 toy){
         String line = toy.getIdToy() + ";" +
@@ -125,17 +124,49 @@ public class DBActions implements IDBActions {
 
     @Override
     public void saveAllToys(List<Toy1> allToys) throws FileNotFoundException, IOException{
-        FileWriter wrtr = new FileWriter(this.fileName, false);
-        BufferedWriter buffWrtr = new BufferedWriter(wrtr);
         String allLines = "";
         for (Toy1 toy1 : allToys) {
             allLines = allLines + toyToString(toy1) + "\n";
         }
-        buffWrtr.write(allLines);
-        buffWrtr.flush();
-        buffWrtr.close();        
-
+        saveStringToFile(allLines, this.fileName, false);
     }
 
-       
+    @Override
+    public void deleteToy(int idRemovedToy) throws FileNotFoundException, IOException {
+        List<Toy1> allToys = getAllToys();
+        allToys.remove(idRemovedToy-1);
+        /** перезаписываем индексы игрушек после удаления и сохраняем базу */
+        int id = 1;
+        for (Toy1 toy : allToys) {
+            toy.setIdToy(id);
+            id++;
+        }
+        saveAllToys(allToys);        
+    }
+
+    @Override
+    public void addWinner(Toy1 prizeToy, String nameWinner) throws FileNotFoundException, IOException {
+        String addWinnerString = java.time.ZonedDateTime.now().toString() + ";" + 
+                            prizeToy.getNameToy() + ";" +
+                            nameWinner + "\n";
+        saveStringToFile(addWinnerString, this.fileWinner, true);
+    }
+
+    @Override
+    public void addToyForDelivery(String nameToy, String nameWinner) throws FileNotFoundException, IOException {
+        String stringData = nameWinner + ";" + nameToy + ";" + java.time.ZonedDateTime.now().toString() + "\n";
+        saveStringToFile(stringData, this.fileDstrb, true);               
+        //throw new UnsupportedOperationException("Unimplemented method 'addToyForDelivery'");
+    }
+
+    @Override
+    public void saveStringToFile(String stringAnyData, String fileName, boolean appendMode) throws FileNotFoundException, IOException {
+        FileWriter wrtr = new FileWriter(fileName, appendMode);
+        BufferedWriter buffWrtr = new BufferedWriter(wrtr);
+        buffWrtr.write(stringAnyData);
+        buffWrtr.flush();
+        buffWrtr.close(); 
+        //throw new UnsupportedOperationException("Unimplemented method 'saveStringToFile'");
+    }     
+     
 }

@@ -34,7 +34,7 @@ public class ViewMenu {
                 + "    PRESENT - вручить призовую Игрушку \n"
                 + "    EXIT - выйти из программы \n\n"
                 + "Введите команду: ");
-            /** Возвращаем команду и выполняет действие */
+            /** Возвращаем команду и выполняем действие */
             com = Command.valueOf(command.toUpperCase());
             if (com == Command.EXIT)
                 return;
@@ -59,6 +59,11 @@ public class ViewMenu {
                         System.out.println(toyEdit.toString() + "\n");
                         break;                        
                     case GET:
+                        System.out.println("\nВНИМАНИЕ, РОЗЫГРЫШ ИГРУШКИ!\n-------------\n");
+                        Toy1 prizeToy = lToy.getPrizeToy();
+                        String nameWinner = prompt("Введите имя победителя: ");
+                        System.out.println("\n" + nameWinner.toUpperCase() + " ВЫИГРЫВАЕТ " + prizeToy.getNameToy().toUpperCase() + "!!!\n" );
+                        lToy.saveResultRaffle(prizeToy, nameWinner);
                     case PRESENT:                    
                 }
             } catch (Exception e) {
@@ -68,8 +73,7 @@ public class ViewMenu {
     }
 
     /**
-     * Получение данных с одного ввода с консоли
-     * 
+     * Метод получения данных с одного ввода с консоли
      * @param message выводимое сообщение
      * @return String
      */

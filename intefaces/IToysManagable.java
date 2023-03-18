@@ -40,5 +40,22 @@ public interface IToysManagable {
      * @throws FileNotFoundException
      */
     Toy1 changingFrq(int numberForEdit, int frqDlvrEdit) throws FileNotFoundException, IOException;
+
+    /**
+     * Метод получения призовой игрушки
+     * @return Toy
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    Toy1 getPrizeToy() throws FileNotFoundException, IOException;
+
+    /**
+     * Метод для регистрации результатов розыгрыша призовой игрушка
+     * @param prizeToy призовая игрушка
+     * @param nameWinner имя победителя
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    void saveResultRaffle(Toy1 prizeToy, String nameWinner) throws FileNotFoundException, IOException;
     
 }
