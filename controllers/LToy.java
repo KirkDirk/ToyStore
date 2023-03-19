@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
+import intefaces.IDBActions;
 import intefaces.IToysManagable;
 import models.Toy1;
 
@@ -68,6 +69,15 @@ public class LToy {
      */
     public void saveResultRaffle(Toy1 prizeToy, String nameWinner) throws FileNotFoundException, IOException {
         iToysManagable.saveResultRaffle(prizeToy, nameWinner);
+    }
+
+    public String getListToyDlvr() throws FileNotFoundException, IOException {
+        return iToysManagable.getListToyDlrv();
+
+    }
+
+    public String[] getArrPresentToy(int numberForDlvr) throws IOException {
+        return iToysManagable.getArrPresentToy(numberForDlvr);
     }
 
 }

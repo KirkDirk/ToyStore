@@ -77,4 +77,9 @@ public interface IDBActions {
      * @throws IOException
      */
     void saveStringToFile(String stringData, String fileName, boolean appendMode) throws FileNotFoundException, IOException;
+
+    String getAllPrizeToys() throws FileNotFoundException, IOException;
+
+	String[] getAllPrizeToys(int numberForDlvr) throws IOException;
+
 }

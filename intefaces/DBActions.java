@@ -19,7 +19,7 @@ public class DBActions implements IDBActions {
     /** Путь к файлу, в который записываются победители */
     private String fileWinner = "src\\storage\\dbWinner.txt";
     /** Путь к файлу, в котором список невыданных призовых игрушек */
-    private String fileDstrb = "src\\storage\\listToyDistribution";
+    private String fileDstrb = "src\\storage\\listToyDistribution.txt";
        
     public DBActions(String fileName) {
         this.fileName = fileName;
@@ -154,7 +154,9 @@ public class DBActions implements IDBActions {
 
     @Override
     public void addToyForDelivery(String nameToy, String nameWinner) throws FileNotFoundException, IOException {
-        String stringData = nameWinner + ";" + nameToy + ";" + java.time.ZonedDateTime.now().toString() + "\n";
+        String stringData = nameWinner + ";" + 
+                            nameToy + ";" + 
+                            java.time.ZonedDateTime.now().toString() + "\n";
         saveStringToFile(stringData, this.fileDstrb, true);               
         //throw new UnsupportedOperationException("Unimplemented method 'addToyForDelivery'");
     }
@@ -167,6 +169,49 @@ public class DBActions implements IDBActions {
         buffWrtr.flush();
         buffWrtr.close(); 
         //throw new UnsupportedOperationException("Unimplemented method 'saveStringToFile'");
+    }
+
+    @Override
+    public String getAllPrizeToys() throws FileNotFoundException, IOException {
+        String allPrizeToys = "";
+        List<String> getAllLines = new ArrayList<>();
+        getAllLines = Files.readAllLines(Paths.get(this.fileDstrb));
+        int counter = 1;
+        for (String line : getAllLines) {
+            if (line != null) {   
+                String[] fromLine = line.split(";");
+                allPrizeToys += "\n" + Integer.toString(counter) + ". " +
+                                "Name Winner: " + fromLine[0] + "   " +
+                                "Name Toy: " + fromLine[1] + "   " +
+                                "Draw Date: " + fromLine[2];            
+                counter++;
+            }   
+        }
+        return allPrizeToys;        
+        //throw new UnsupportedOperationException("Unimplemented method 'getAllPrizeToys'");
+    }
+
+    @Override
+    public String[] getAllPrizeToys(int numberForDlvr) throws IOException {
+        /** выгружаем все данные из файла с игрушками на выдачу в строку */
+        List<String> allPrizeToys = Files.readAllLines(Paths.get(this.fileDstrb));
+        /** считываем указанную строку для выдачи */
+        String linePresentToy = Files.readAllLines(Paths.get(this.fileDstrb)).get(numberForDlvr-1); 
+        /** удаляем подстроку в строке - вымарываем выданную игрушку из списка-строки игрушек на выдачу */
+        allPrizeToys.remove(numberForDlvr-1);
+        /** превращаем список в строку для записи в файл */
+        String allPrizeToysWithoutPresent ="";
+        for (String line : allPrizeToys) {
+            allPrizeToysWithoutPresent += line + "\n";
+        }
+        /** перезаписывает строку игрушек на выдачу в файл со списком игрушек */
+        saveStringToFile(allPrizeToysWithoutPresent, this.fileDstrb, false);
+        /** разбиваем строку с выдаваемой игрушкой в массив */
+        String[] arrPresentToy = linePresentToy.split(";");
+        /** возвращаем массив с данными выдаваемой игрушки */
+        return arrPresentToy;
+        // throw new UnsupportedOperationException("Unimplemented method 'getAllPrizeToys'");
+        
     }     
      
 }

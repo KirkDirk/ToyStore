@@ -100,4 +100,16 @@ public class ToysMagable implements IToysManagable {
         idbActions.addToyForDelivery(prizeToy.getNameToy(), nameWinner);
     }
 
+    @Override
+    public String getListToyDlrv() throws FileNotFoundException, IOException {
+        return idbActions.getAllPrizeToys();
+        //throw new UnsupportedOperationException("Unimplemented method 'getToyDlrv'");
+    }
+
+    @Override
+    public String[] getArrPresentToy(int numberForDlvr) throws IOException {
+        return idbActions.getAllPrizeToys(numberForDlvr);
+        //throw new UnsupportedOperationException("Unimplemented method 'getArrPresentToy'");
+    }
+
 }

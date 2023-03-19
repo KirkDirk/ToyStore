@@ -64,7 +64,14 @@ public class ViewMenu {
                         String nameWinner = prompt("Введите имя победителя: ");
                         System.out.println("\n" + nameWinner.toUpperCase() + " ВЫИГРЫВАЕТ " + prizeToy.getNameToy().toUpperCase() + "!!!\n" );
                         lToy.saveResultRaffle(prizeToy, nameWinner);
-                    case PRESENT:                    
+                        break;
+                    case PRESENT:    
+                        System.out.println("\n Список игрушек к выдаче: ");
+                        System.out.println(lToy.getListToyDlvr());
+                        int numberForDlvr = Integer.parseInt(prompt("\nВведите номер выдаваемой Игрушки: "));
+                        String[] presentToy = lToy.getArrPresentToy(numberForDlvr);
+                        System.out.println("\nИгрушка " + presentToy[1] + " выдана " + presentToy[0]);
+                        break;
                 }
             } catch (Exception e) {
                 System.out.println("Что-то пошло не так: " + e.getMessage());

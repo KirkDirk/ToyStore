@@ -57,5 +57,9 @@ public interface IToysManagable {
      * @throws IOException
      */
     void saveResultRaffle(Toy1 prizeToy, String nameWinner) throws FileNotFoundException, IOException;
+
+    String getListToyDlrv() throws FileNotFoundException, IOException;
+
+    String[] getArrPresentToy(int numberForDlvr) throws IOException;
     
 }
