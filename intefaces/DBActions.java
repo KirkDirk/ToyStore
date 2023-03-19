@@ -21,6 +21,10 @@ public class DBActions implements IDBActions {
     /** Путь к файлу, в котором список невыданных призовых игрушек */
     private String fileDstrb = "src\\storage\\listToyDistribution.txt";
        
+    /**
+     * Интерфейс работы с БД
+     * @param fileName - имя (путь) файла БД с разыгрываемыми Игрушками
+     */
     public DBActions(String fileName) {
         this.fileName = fileName;
         try (FileWriter writer = new FileWriter(fileName, true)) {
@@ -192,7 +196,7 @@ public class DBActions implements IDBActions {
     }
 
     @Override
-    public String[] getAllPrizeToys(int numberForDlvr) throws IOException {
+    public String[] getPrizeToys(int numberForDlvr) throws IOException {
         /** выгружаем все данные из файла с игрушками на выдачу в строку */
         List<String> allPrizeToys = Files.readAllLines(Paths.get(this.fileDstrb));
         /** считываем указанную строку для выдачи */

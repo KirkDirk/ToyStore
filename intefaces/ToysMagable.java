@@ -10,8 +10,13 @@ import models.Toy1;
 /** Класс для управления Игрушками в базе розыгрыша */
 public class ToysMagable implements IToysManagable {
 
+    /** Экземпляр интерфейса работы с базами данных */
     private IDBActions idbActions;
 
+    /**
+     * Интерфейс управления моделями "Игрушки"
+     * @param idbActions интерфейс работы с БД
+     */
     public ToysMagable(IDBActions idbActions) {
         this.idbActions = idbActions;
     }
@@ -108,7 +113,7 @@ public class ToysMagable implements IToysManagable {
 
     @Override
     public String[] getArrPresentToy(int numberForDlvr) throws IOException {
-        return idbActions.getAllPrizeToys(numberForDlvr);
+        return idbActions.getPrizeToys(numberForDlvr);
         //throw new UnsupportedOperationException("Unimplemented method 'getArrPresentToy'");
     }
 

@@ -4,17 +4,29 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
-import intefaces.IDBActions;
 import intefaces.IToysManagable;
 import models.Toy1;
 
 public class LToy {
+    /**
+     * интерфейс управления моделями
+     */
     private IToysManagable iToysManagable;
 
+    /**
+     * Конструктор контроллера
+     * @param iToysManagable интерфейс управления моделями
+     */
     public LToy(IToysManagable iToysManagable) {
         this.iToysManagable = iToysManagable;
     }
 
+    /**
+     * Создаем и записываем в базу новую игрушку
+     * @param toy экземпляр класса Toy1
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
     public void getNewToy(Toy1 toy) throws FileNotFoundException, IOException {
         iToysManagable.createToy(toy);                
     };
@@ -29,7 +41,7 @@ public class LToy {
     }
 
     /**
-     * Получаем список всех Игрушек
+     * Получаем список всех Игрушек из базы данных в формате списка моделей
      * @return List-Toy1
      * @throws FileNotFoundException
      * @throws IOException
@@ -40,8 +52,8 @@ public class LToy {
 
     /**
      * Заменяем значение частоты выпадения для выбранной Игрушки
-     * @param numberForEdit
-     * @param frqDlvrEdit
+     * @param numberForEdit номер выбранной Игрушки
+     * @param frqDlvrEdit новое значения частоты выпадения
      * @return Toy1
      * @throws FileNotFoundException
      * @throws IOException
@@ -51,7 +63,7 @@ public class LToy {
     }
 
     /**
-     * Разыгрываем призовую игрушку
+     * Разыгрываем призовую игрушку через рандом. Результат розыгрыша выводим на экран
      * @return Toy1
      * @throws FileNotFoundException
      * @throws IOException
@@ -61,8 +73,10 @@ public class LToy {
     }
 
     /**
-     * Записываем результаты розыгрыша игрушки
-     * @param prizeToy экземпляр класса Toy1, определенныq в getPrizeToy
+     * Записываем результаты розыгрыша игрушки. Запись осуществляем в формате: 
+     * Имя победителя; наименование Игрушки; дата-время. Пополняются два файла: 
+     * исторический файл всех победителей и список игрушек к выдаче.
+     * @param prizeToy экземпляр класса Toy1, определенный в getPrizeToy
      * @param nameWinner имя победителя
      * @throws FileNotFoundException
      * @throws IOException
@@ -71,11 +85,25 @@ public class LToy {
         iToysManagable.saveResultRaffle(prizeToy, nameWinner);
     }
 
+    /**
+     * Получаем список Игрушек к выдаче победителям, конвертированный в строку.
+     * Список нужен для вывода на экран, чтобы выбрать ту Игрушку, которую выдать. 
+     * Предполагается, что Игрушки забирают быстро и список небольшой 
+     * @return String
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
     public String getListToyDlvr() throws FileNotFoundException, IOException {
         return iToysManagable.getListToyDlrv();
-
     }
 
+    /**
+     * Получаем данные из списка игрушек для выдачи по конкретному указателю. 
+     * Конвертируем в массив для удобства вывода на экран
+     * @param numberForDlvr - номер выбранной Игрушки из списка
+     * @return
+     * @throws IOException
+     */
     public String[] getArrPresentToy(int numberForDlvr) throws IOException {
         return iToysManagable.getArrPresentToy(numberForDlvr);
     }

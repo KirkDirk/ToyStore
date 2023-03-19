@@ -8,6 +8,7 @@ import models.Toy1;
 
 /** Интерфейс управления Игрушками в программе */
 public interface IToysManagable {
+
     /**
      * Метод добавления Игрушки в базу розыгрыша
      * @param toy - класс Игрушки
@@ -18,14 +19,14 @@ public interface IToysManagable {
 
     /**
      * Метод получения ID последней Игрушки в базе розыгрыша
-     * @return
+     * @return int
      * @throws IOException
      */
     int getLastIDToy() throws IOException;
 
     /**
-     * Метод получения списка наименований Игрушек в базе розыгрыша
-     * @return 
+     * Метод получения списка наименований всех Игрушек в базе розыгрыша
+     * @return List<Toy1>
      * @throws IOException
      * @throws FileNotFoundException
      */
@@ -33,8 +34,8 @@ public interface IToysManagable {
 
     /**
      * Метод для замены значения частоты выпадения Игрушки на новое
-     * @param numberForEdit индекс выбранной Игрушки
-     * @param frqDlvrEdit новое значения частоты выбранной Игрушки
+     * @param numberForEdit - индекс выбранной Игрушки
+     * @param frqDlvrEdit - новое значения частоты выбранной Игрушки
      * @return Toy1
      * @throws IOException
      * @throws FileNotFoundException
@@ -50,7 +51,7 @@ public interface IToysManagable {
     Toy1 getPrizeToy() throws FileNotFoundException, IOException;
 
     /**
-     * Метод для регистрации результатов розыгрыша призовой игрушка
+     * Метод для регистрации результатов розыгрыша призовой Игрушки
      * @param prizeToy призовая игрушка
      * @param nameWinner имя победителя
      * @throws FileNotFoundException
@@ -58,8 +59,21 @@ public interface IToysManagable {
      */
     void saveResultRaffle(Toy1 prizeToy, String nameWinner) throws FileNotFoundException, IOException;
 
+    /**
+     * Метод получения из файла списка Игрушек для выдачи победителю
+     * @return String
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
     String getListToyDlrv() throws FileNotFoundException, IOException;
 
+    /**
+     * Метод получения данных из файла по выдаваемой Игрушке и удалению 
+     * из списка выдачи
+     * @param numberForDlvr номер запрашивой Игрушки
+     * @return массив данных по игрушке
+     * @throws IOException
+     */
     String[] getArrPresentToy(int numberForDlvr) throws IOException;
     
 }

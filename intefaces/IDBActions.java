@@ -42,7 +42,7 @@ public interface IDBActions {
 
     /**
      * Удаляем игрушку из базы по индексу, обновляем индексы в базе
-     * @param idRemovedToy
+     * @param idRemovedToy - номер удаляемой игрушки
      * @throws FileNotFoundException
      * @throws IOException
      */
@@ -78,8 +78,20 @@ public interface IDBActions {
      */
     void saveStringToFile(String stringData, String fileName, boolean appendMode) throws FileNotFoundException, IOException;
 
+    /**
+     * Получаем из файла список всех Игрушек к выдаче, преобразованный в строку
+     * @return - String
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
     String getAllPrizeToys() throws FileNotFoundException, IOException;
 
-	String[] getAllPrizeToys(int numberForDlvr) throws IOException;
+    /**
+     * 
+     * @param numberForDlvr
+     * @return
+     * @throws IOException
+     */
+	String[] getPrizeToys(int numberForDlvr) throws IOException;
 
 }
